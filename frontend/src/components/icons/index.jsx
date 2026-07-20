@@ -78,6 +78,34 @@ export function CloseIcon({ className = 'h-4 w-4' }) {
   )
 }
 
+export function DownloadIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M12 4v12" />
+      <path d="m6 11 6 6 6-6" />
+      <path d="M5 20h14" />
+    </svg>
+  )
+}
+
+export function RefreshIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M20 12a8 8 0 1 1-2.3-5.6" />
+      <path d="M20 3v4h-4" />
+    </svg>
+  )
+}
+
+export function ArrowRightIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M4 12h16" />
+      <path d="m14 6 6 6-6 6" />
+    </svg>
+  )
+}
+
 export function SparkleIcon({ className = 'h-5 w-5' }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...base}>

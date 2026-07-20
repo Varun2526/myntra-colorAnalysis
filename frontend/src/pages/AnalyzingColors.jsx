@@ -1,18 +1,23 @@
-import { useCallback, useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 import useAnalysis from '../hooks/useAnalysis'
 import ScanPreview from '../components/analysis/ScanPreview'
 import AnalysisProgress from '../components/analysis/AnalysisProgress'
 
 /** Phase 2 — Analysis Loading screen. Results navigation lands in Phase 3. */
 function AnalyzingColors() {
+  const navigate = useNavigate()
   const { image } = useAnalysis()
   const [isComplete, setIsComplete] = useState(false)
+  const navigateTimer = useRef(null)
+
+  useEffect(() => () => clearTimeout(navigateTimer.current), [])
 
   const handleComplete = useCallback(() => {
     setIsComplete(true)
-    // Phase 3: navigate to the results page here.
-  }, [])
+    // Brief pause so "preparing your results" registers before the switch.
+    navigateTimer.current = setTimeout(() => navigate('/results'), 900)
+  }, [navigate])
 
   if (!image) return <Navigate to="/" replace />
 

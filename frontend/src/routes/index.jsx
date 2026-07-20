@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import DiscoverColors from '../pages/DiscoverColors'
 import AnalyzingColors from '../pages/AnalyzingColors'
+import Results from '../pages/Results'
 
 function AppRoutes() {
   return (
@@ -9,6 +10,7 @@ function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<DiscoverColors />} />
         <Route path="/analyzing" element={<AnalyzingColors />} />
+        <Route path="/results" element={<Results />} />
       </Route>
     </Routes>
   )

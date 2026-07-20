@@ -1,0 +1,43 @@
+{
+  "season": "autumn",
+  "undertone": "warm",
+  "confidence": {
+    "season": 0.74,
+    "undertone": 0.82
+  },
+  "features": {
+    "eye": { "hex": "#5D4A3C", "rgb": [93, 74, 60] },
+    "hair": { "hex": "#4D3229", "rgb": [77, 50, 41] },
+    "skin": { "hex": "#C99578", "rgb": [201, 149, 120] },
+    "lips": { "hex": "#9D5348", "rgb": [157, 83, 72] }
+  },
+  "seasonalPalette": [
+    { "name": "Deep Teal", "hex": "#2A635F" },
+    { "name": "Terracotta", "hex": "#D08465" },
+    { "name": "Crimson", "hex": "#9D222D" },
+    { "name": "Warm Ivory", "hex": "#F5ECE4" },
+    { "name": "Rosewood", "hex": "#BF6766" },
+    { "name": "Olive", "hex": "#6C724C" }
+  ],
+  "personalizedPalette": [
+    { "name": "Terracotta Glow", "hex": "#B65D34" },
+    { "name": "Camel", "hex": "#C98A4B" },
+    { "name": "Moss", "hex": "#8A9A5B" },
+    { "name": "Olive Grove", "hex": "#6C724C" },
+    { "name": "Brick", "hex": "#9D4E4E" },
+    { "name": "Warm Sand", "hex": "#D9A984" },
+    { "name": "Walnut", "hex": "#7A5C3E" },
+    { "name": "Forest", "hex": "#4E6E58" },
+    { "name": "Coral Clay", "hex": "#C46A4F" }
+  ],
+  "outfitColors": [
+    { "name": "Rust", "hex": "#A84C32" },
+    { "name": "Mustard", "hex": "#C99425" },
+    { "name": "Olive", "hex": "#6B722F" },
+    { "name": "Chocolate", "hex": "#5A3A28" },
+    { "name": "Cream", "hex": "#F2E5D0" },
+    { "name": "Teal", "hex": "#2A635F" },
+    { "name": "Burgundy", "hex": "#6E2231" },
+    { "name": "Camel", "hex": "#B98A5C" }
+  ]
+}
