@@ -1,12 +1,16 @@
+import { useNavigate } from 'react-router-dom'
 import UploadCard from '../components/upload/UploadCard'
 import WhyColorAnalysis from '../components/upload/WhyColorAnalysis'
+import useAnalysis from '../hooks/useAnalysis'
 
-/** Phase 1 — Upload Screen. Analysis flow hooks in via handleContinue later. */
+/** Phase 1 — Upload Screen. Continue hands the image to the analysis flow. */
 function DiscoverColors() {
+  const navigate = useNavigate()
+  const { startAnalysis } = useAnalysis()
+
   const handleContinue = (file) => {
-    // Backend integration lands in a later phase:
-    // upload `file` to the FastAPI analysis endpoint, then navigate to results.
-    void file
+    startAnalysis(file)
+    navigate('/analyzing')
   }
 
   const handleTakePhoto = () => {
