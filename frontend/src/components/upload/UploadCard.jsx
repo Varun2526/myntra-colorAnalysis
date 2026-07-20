@@ -26,8 +26,10 @@ function UploadCard({ onContinue, onTakePhoto }) {
   return (
     <section aria-label="Selfie upload">
       <div
-        className={`border-2 border-dashed transition-colors ${
-          isDragging ? 'border-primary' : 'border-gray-300'
+        className={`group border-2 border-dashed transition-all duration-300 ${
+          isDragging
+            ? 'border-primary shadow-[0_0_0_4px_rgba(255,63,108,0.12)]'
+            : 'border-gray-300 hover:border-primary/50 hover:shadow-sm'
         }`}
       >
         <input
