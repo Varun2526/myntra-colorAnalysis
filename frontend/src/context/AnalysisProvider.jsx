@@ -2,14 +2,16 @@ import { useCallback, useMemo, useState } from 'react'
 import { AnalysisContext } from './analysis-context'
 
 /**
- * Carries the selected selfie across the flow (upload → analyzing → results).
- * `image.file` is what gets POSTed to the backend in a later phase.
+ * Carries the selected selfie and its analysis result across the flow
+ * (upload → analyzing → results).
  */
 function AnalysisProvider({ children }) {
   const [image, setImage] = useState(null) // { file, previewUrl }
+  const [result, setResult] = useState(null) // AnalysisResponse JSON
 
   const startAnalysis = useCallback((file) => {
     setImage({ file, previewUrl: URL.createObjectURL(file) })
+    setResult(null)
   }, [])
 
   const reset = useCallback(() => {
@@ -17,11 +19,12 @@ function AnalysisProvider({ children }) {
       if (current?.previewUrl) URL.revokeObjectURL(current.previewUrl)
       return null
     })
+    setResult(null)
   }, [])
 
   const value = useMemo(
-    () => ({ image, startAnalysis, reset }),
-    [image, startAnalysis, reset]
+    () => ({ image, result, setResult, startAnalysis, reset }),
+    [image, result, startAnalysis, reset]
   )
 
   return (

@@ -1,6 +1,5 @@
 import { Navigate, useNavigate } from 'react-router-dom'
 import useAnalysis from '../hooks/useAnalysis'
-import { getAnalysisResult } from '../services/analysisService'
 import { SEASON_CONTENT } from '../data/seasonContent'
 import ProfileCard from '../components/results/ProfileCard'
 import AnalysisSummary from '../components/results/AnalysisSummary'
@@ -10,13 +9,12 @@ import FashionTips from '../components/results/FashionTips'
 import OutfitColors from '../components/results/OutfitColors'
 import ExploreCTA from '../components/results/ExploreCTA'
 
-/** Phase 3 — Results page. Mock-backed; FastAPI wires into analysisService. */
+/** Results page — renders the analysis produced during /analyzing. */
 function Results() {
   const navigate = useNavigate()
-  const { image, reset } = useAnalysis()
-  const result = getAnalysisResult()
+  const { image, result, reset } = useAnalysis()
 
-  if (!image) return <Navigate to="/" replace />
+  if (!image || !result) return <Navigate to="/" replace />
 
   const handleAnalyzeAgain = () => {
     reset()
