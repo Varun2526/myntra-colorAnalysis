@@ -1,4 +1,5 @@
 import { SearchIcon, ProfileIcon, HeartIcon, BagIcon } from './icons'
+import logo from '../assets/logo.png'
 
 const NAV_ITEMS = [
   { label: 'Men' },
@@ -19,12 +20,8 @@ const ACTIONS = [
 
 function Logo() {
   return (
-    <a href="/" className="flex items-center gap-1.5 shrink-0" aria-label="Myntra home">
-      <svg viewBox="0 0 32 24" className="h-6 w-8" aria-hidden="true">
-        <path d="M2 22 9 3l7 12L23 3l7 19" fill="none" stroke="#ff3f6c" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9 3l7 12L23 3" fill="none" stroke="#ff9f00" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
-      </svg>
-      <span className="text-[11px] font-bold tracking-wide text-ink">Myntra</span>
+    <a href="/" className="shrink-0" aria-label="Myntra home">
+      <img src={logo} alt="Myntra" className="h-12 w-auto object-contain" />
     </a>
   )
 }
