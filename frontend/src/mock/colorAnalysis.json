@@ -11,6 +11,7 @@
     "skin": { "hex": "#C99578", "rgb": [201, 149, 120] },
     "lips": { "hex": "#9D5348", "rgb": [157, 83, 72] }
   },
+  "facePosition": { "chinY": 0.52, "faceWidth": 0.34 },
   "seasonalPalette": [
     { "name": "Deep Teal", "hex": "#2A635F" },
     { "name": "Terracotta", "hex": "#D08465" },

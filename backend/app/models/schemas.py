@@ -29,11 +29,19 @@ class PaletteColor(BaseModel):
     hex: str
 
 
+class FacePosition(BaseModel):
+    """Normalized (0-1) draping geometry, independent of image resolution."""
+
+    chinY: float
+    faceWidth: float
+
+
 class AnalysisResponse(BaseModel):
     season: str
     undertone: str
     confidence: Confidence
     features: CapturedFeatures
+    facePosition: FacePosition
     seasonalPalette: list[PaletteColor]
     personalizedPalette: list[PaletteColor]
     outfitColors: list[PaletteColor]

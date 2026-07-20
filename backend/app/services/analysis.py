@@ -7,7 +7,7 @@ from app.services.color_analysis import (
     predict_season,
     predict_undertone,
 )
-from app.services.face_features import extract_feature_colors
+from app.services.face_features import extract_face_features
 
 
 def _bgr_to_feature(color_bgr) -> dict:
@@ -16,7 +16,7 @@ def _bgr_to_feature(color_bgr) -> dict:
 
 
 def analyze_image(image_bytes: bytes) -> AnalysisResponse:
-    feature_colors = extract_feature_colors(image_bytes)
+    feature_colors, face_position = extract_face_features(image_bytes)
     features_df = prepare_feature_data(feature_colors)
 
     undertone, undertone_confidence = predict_undertone(features_df)
@@ -36,6 +36,7 @@ def analyze_image(image_bytes: bytes) -> AnalysisResponse:
             "skin": _bgr_to_feature(feature_colors["Cheek"]),
             "lips": _bgr_to_feature(feature_colors["Lips"]),
         },
+        facePosition=face_position,
         seasonalPalette=palettes.seasonal_palette(season),
         personalizedPalette=palettes.generate_clothing_colors(
             skin_rgb, season, undertone

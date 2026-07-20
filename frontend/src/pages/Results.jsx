@@ -38,7 +38,7 @@ function Results() {
       </header>
 
       <div className="mt-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-[360px_1fr]">
-        <div className="lg:sticky lg:top-28">
+        <div className="lg:sticky lg:top-28 space-y-4">
           <ProfileCard
             previewUrl={image.previewUrl}
             onAnalyzeAgain={handleAnalyzeAgain}
@@ -46,6 +46,13 @@ function Results() {
               // UI only — report generation lands with the backend phase.
             }}
           />
+          <button
+            type="button"
+            onClick={() => navigate('/preview')}
+            className="flex w-full items-center justify-center gap-2.5 rounded-md bg-gradient-to-r from-primary to-[#ff8f3f] px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            ✨ Try Virtual Draping
+          </button>
         </div>
 
         <div className="min-w-0 space-y-12">

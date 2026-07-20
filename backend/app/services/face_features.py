@@ -24,6 +24,11 @@ FEATURE_LANDMARKS = {
     "Hair": 295,
 }
 
+# Landmarks koreai used for its draping geometry: chin and the two face edges.
+CHIN_LANDMARK = 152
+FACE_LEFT_LANDMARK = 234
+FACE_RIGHT_LANDMARK = 454
+
 _landmarker = None
 _lock = threading.Lock()
 
@@ -64,8 +69,28 @@ class NoFaceDetectedError(Exception):
     """Raised when MediaPipe finds no face in the uploaded image."""
 
 
-def extract_feature_colors(image_bytes: bytes) -> dict:
-    """Decode an uploaded image and return {'Eye'|'Lips'|'Cheek'|'Hair': BGR array}."""
+def _face_geometry(landmarks) -> dict:
+    """Normalized draping geometry from the same landmarks (0-1, resolution-independent).
+
+    MediaPipe landmark coords are already normalized to the image, so these
+    values don't depend on the uploaded image's pixel dimensions.
+    """
+    chin_y = landmarks[CHIN_LANDMARK].y
+    face_width = abs(
+        landmarks[FACE_RIGHT_LANDMARK].x - landmarks[FACE_LEFT_LANDMARK].x
+    )
+    return {
+        "chinY": round(float(chin_y), 4),
+        "faceWidth": round(float(face_width), 4),
+    }
+
+
+def extract_face_features(image_bytes: bytes) -> tuple[dict, dict]:
+    """Decode an uploaded image; return (feature colors, face geometry).
+
+    feature colors: {'Eye'|'Lips'|'Cheek'|'Hair': BGR array}
+    face geometry:  {'chinY', 'faceWidth'} — normalized 0-1
+    """
     buffer = np.frombuffer(image_bytes, dtype=np.uint8)
     frame = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
     if frame is None:
@@ -87,4 +112,5 @@ def extract_feature_colors(image_bytes: bytes) -> dict:
         if color_bgr is None:
             raise NoFaceDetectedError(f"Could not sample {feature} color")
         feature_colors[feature] = color_bgr
-    return feature_colors
+
+    return feature_colors, _face_geometry(landmarks)

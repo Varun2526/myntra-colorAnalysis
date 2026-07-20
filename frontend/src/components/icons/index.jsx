@@ -106,6 +106,15 @@ export function ArrowRightIcon({ className = 'h-5 w-5' }) {
   )
 }
 
+export function ArrowLeftIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M20 12H4" />
+      <path d="m10 18-6-6 6-6" />
+    </svg>
+  )
+}
+
 export function SparkleIcon({ className = 'h-5 w-5' }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...base}>
