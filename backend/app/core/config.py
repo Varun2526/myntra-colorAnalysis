@@ -1,6 +1,10 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# backend/ directory (parents: core -> app -> backend)
+BACKEND_DIR = Path(__file__).resolve().parents[2]
 
 
 class Settings(BaseSettings):
@@ -12,6 +16,9 @@ class Settings(BaseSettings):
     port: int = 8000
 
     cors_origins: str = "http://localhost:5173"
+
+    ml_models_dir: Path = BACKEND_DIR / "ml_models"
+    max_upload_bytes: int = 10 * 1024 * 1024  # 10 MB
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
