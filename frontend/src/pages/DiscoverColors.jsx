@@ -1,20 +1,27 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UploadCard from '../components/upload/UploadCard'
 import WhyColorAnalysis from '../components/upload/WhyColorAnalysis'
+import CameraCapture from '../components/upload/CameraCapture'
 import useAnalysis from '../hooks/useAnalysis'
 
 /** Phase 1 — Upload Screen. Continue hands the image to the analysis flow. */
 function DiscoverColors() {
   const navigate = useNavigate()
   const { startAnalysis } = useAnalysis()
+  const [cameraOpen, setCameraOpen] = useState(false)
 
   const handleContinue = (file) => {
     startAnalysis(file)
     navigate('/analyzing')
   }
 
-  const handleTakePhoto = () => {
-    // Camera capture flow lands in a later phase (UI only for now).
+  const handleTakePhoto = () => setCameraOpen(true)
+
+  // A captured photo goes through the exact same path as an uploaded file.
+  const handleCapture = (file) => {
+    setCameraOpen(false)
+    handleContinue(file)
   }
 
   return (
@@ -30,6 +37,13 @@ function DiscoverColors() {
         <UploadCard onContinue={handleContinue} onTakePhoto={handleTakePhoto} />
         <WhyColorAnalysis />
       </div>
+
+      {cameraOpen && (
+        <CameraCapture
+          onCapture={handleCapture}
+          onClose={() => setCameraOpen(false)}
+        />
+      )}
     </div>
   )
 }
