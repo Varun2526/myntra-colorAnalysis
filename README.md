@@ -1,4 +1,4 @@
-# myntra-colorAnalysis
+# colorAnalysis
 
 AI-powered color analysis for fashion — a hackathon project. Users will be able to get a personal color analysis and receive matching product recommendations. The AI model will be integrated into the backend in a later phase; this repository currently contains the production-ready project scaffold.
 
