@@ -6,6 +6,22 @@ import { useCallback, useEffect, useRef, useState } from 'react'
  *
  * status: 'idle' | 'starting' | 'live' | 'error'
  */
+function messageForError(err) {
+  switch (err?.name) {
+    case 'NotAllowedError':
+    case 'SecurityError':
+      return 'Camera access is blocked. Allow the camera for this site in your browser (and in your OS privacy settings), then try again — or upload a photo instead.'
+    case 'NotFoundError':
+    case 'DevicesNotFoundError':
+      return 'No camera was found on this device. Upload a photo instead.'
+    case 'NotReadableError':
+    case 'TrackStartError':
+      return 'Your camera is in use by another app. Close it and try again, or upload a photo instead.'
+    default:
+      return 'We couldn’t access your camera. Check your browser permissions, or upload a photo instead.'
+  }
+}
+
 function useCamera() {
   const videoRef = useRef(null)
   const streamRef = useRef(null)
@@ -38,11 +54,9 @@ function useCamera() {
         await videoRef.current.play().catch(() => {})
       }
       setStatus('live')
-    } catch {
+    } catch (err) {
       setStatus('error')
-      setError(
-        'We couldn’t access your camera. Check your browser permissions, or upload a photo instead.'
-      )
+      setError(messageForError(err))
     }
   }, [])
 
