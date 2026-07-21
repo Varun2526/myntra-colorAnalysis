@@ -8,10 +8,12 @@ const BENEFITS = [
 
 function MiniLogo() {
   return (
-    <span className="flex h-9 w-9 items-center justify-center rounded bg-white shadow-sm">
-      <svg viewBox="0 0 32 24" className="h-4 w-5" aria-hidden="true">
-        <path d="M2 22 9 3l7 12L23 3l7 19" fill="none" stroke="#ff3f6c" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+    <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded bg-white shadow-sm">
+      <img
+        src="/myntra-logo.jpeg"
+        alt="Myntra"
+        className="h-full w-full object-contain"
+      />
     </span>
   )
 }
