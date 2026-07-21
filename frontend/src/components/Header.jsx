@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { label: 'Beauty' },
   { label: 'Genz' },
   { label: 'Studio' },
-  { label: 'Fitfluent', highlight: true, badge: 'New' },
+  { label: 'Fitfluent', badge: 'New' },
 ]
 
 const ACTIONS = [
