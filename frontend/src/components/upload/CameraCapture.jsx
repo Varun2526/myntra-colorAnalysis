@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import useCamera from '../../hooks/useCamera'
+import FaceMeshOverlay from './FaceMeshOverlay'
 import { CameraIcon, RefreshIcon, CloseIcon } from '../icons'
 
 /**
@@ -65,21 +66,26 @@ function CameraCapture({ onCapture, onClose }) {
             <p className="text-sm leading-relaxed text-white/80">{error}</p>
           </div>
         ) : (
-          <div className="relative flex max-h-full w-full max-w-2xl items-center justify-center">
-            {/* Live preview — mirrored for a natural selfie feel */}
-            <video
-              ref={videoRef}
-              playsInline
-              muted
-              className={`max-h-[70vh] w-full rounded-lg object-contain -scale-x-100 ${
-                shot ? 'hidden' : 'block'
-              }`}
-            />
+          <div className="flex max-h-full w-full max-w-2xl items-center justify-center">
+            {/* Live preview + mesh — mirrored together for a natural selfie feel.
+                inline-block wrapper shrinks to the video so the canvas overlays
+                the exact same box. */}
+            {!shot && (
+              <div className="relative inline-block -scale-x-100">
+                <video
+                  ref={videoRef}
+                  playsInline
+                  muted
+                  className="block max-h-[70vh] max-w-full rounded-lg"
+                />
+                <FaceMeshOverlay videoRef={videoRef} active={status === 'live'} />
+              </div>
+            )}
             {shot && (
               <img
                 src={shot.url}
                 alt="Captured photo preview"
-                className="max-h-[70vh] w-full rounded-lg object-contain -scale-x-100"
+                className="max-h-[70vh] max-w-full -scale-x-100 rounded-lg object-contain"
               />
             )}
             {status === 'starting' && (
