@@ -8,6 +8,7 @@ from app.services.color_analysis import (
     predict_undertone,
 )
 from app.services.face_features import extract_face_features
+from app.services.recommendations import build_recommendations
 
 
 def _bgr_to_feature(color_bgr) -> dict:
@@ -25,6 +26,15 @@ def analyze_image(image_bytes: bytes) -> AnalysisResponse:
     # koreai uses the cheek color as the skin tone for palette generation.
     cheek = feature_colors["Cheek"]
     skin_rgb = [int(cheek[2]), int(cheek[1]), int(cheek[0])]
+    hair = feature_colors["Hair"]
+    hair_rgb = [int(hair[2]), int(hair[1]), int(hair[0])]
+
+    personalized_palette = palettes.generate_clothing_colors(
+        skin_rgb, season, undertone
+    )
+    recommendations = build_recommendations(
+        season, undertone, skin_rgb, hair_rgb, personalized_palette
+    )
 
     return AnalysisResponse(
         season=season,
@@ -37,9 +47,10 @@ def analyze_image(image_bytes: bytes) -> AnalysisResponse:
             "lips": _bgr_to_feature(feature_colors["Lips"]),
         },
         facePosition=face_position,
+        seasonProfile=recommendations["seasonProfile"],
+        undertoneProfile=recommendations["undertoneProfile"],
+        fashionTips=recommendations["fashionTips"],
         seasonalPalette=palettes.seasonal_palette(season),
-        personalizedPalette=palettes.generate_clothing_colors(
-            skin_rgb, season, undertone
-        ),
+        personalizedPalette=personalized_palette,
         outfitColors=palettes.outfit_colors(season),
     )

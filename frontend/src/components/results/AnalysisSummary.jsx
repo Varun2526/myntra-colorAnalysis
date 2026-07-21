@@ -1,5 +1,3 @@
-import { SEASON_CONTENT, UNDERTONE_CONTENT } from '../../data/seasonContent'
-
 function ConfidenceRing({ value }) {
   const radius = 26
   const circumference = 2 * Math.PI * radius
@@ -39,9 +37,7 @@ function StatTile({ label, children }) {
 }
 
 /** Season, undertone and confidence at a glance, with a short explanation. */
-function AnalysisSummary({ season, undertone, confidence }) {
-  const seasonInfo = SEASON_CONTENT[season]
-  const undertoneInfo = UNDERTONE_CONTENT[undertone]
+function AnalysisSummary({ seasonProfile, undertoneProfile, confidence }) {
   const overallConfidence = (confidence.season + confidence.undertone) / 2
 
   return (
@@ -51,14 +47,12 @@ function AnalysisSummary({ season, undertone, confidence }) {
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatTile label="Season">
-          <span className="text-2xl font-bold text-primary">{seasonInfo.title}</span>
-          <span className="text-xs text-ink-light">{seasonInfo.tagline}</span>
+          <span className="text-2xl font-bold text-primary">{seasonProfile.title}</span>
+          <span className="text-xs text-ink-light">{seasonProfile.tagline}</span>
         </StatTile>
         <StatTile label="Undertone">
-          <span className="text-2xl font-bold text-ink">{undertoneInfo.title}</span>
-          <span className="text-xs text-ink-light">
-            {undertone === 'warm' ? 'Golden & peachy' : undertone === 'cool' ? 'Pink & blue' : 'Balanced'}
-          </span>
+          <span className="text-2xl font-bold text-ink">{undertoneProfile.title}</span>
+          <span className="text-xs text-ink-light">{undertoneProfile.descriptor}</span>
         </StatTile>
         <StatTile label="Confidence">
           <ConfidenceRing value={overallConfidence} />
@@ -66,10 +60,10 @@ function AnalysisSummary({ season, undertone, confidence }) {
       </div>
 
       <p className="mt-6 text-[15px] leading-relaxed text-ink">
-        {seasonInfo.description}
+        {seasonProfile.description}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-ink-light">
-        {undertoneInfo.note}
+        {undertoneProfile.note}
       </p>
     </section>
   )

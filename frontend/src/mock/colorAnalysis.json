@@ -12,6 +12,22 @@
     "lips": { "hex": "#9D5348", "rgb": [157, 83, 72] }
   },
   "facePosition": { "chinY": 0.52, "faceWidth": 0.34 },
+  "seasonProfile": {
+    "title": "Autumn",
+    "tagline": "Rich, warm and earthy",
+    "description": "Your coloring is warm and deep, like autumn foliage. Earthy, spiced shades make your skin glow, while icy pastels and stark black can wash you out."
+  },
+  "undertoneProfile": {
+    "title": "Warm",
+    "descriptor": "Golden & peachy",
+    "note": "Your skin carries golden, peachy hues — gold jewellery and earth-toned colors harmonise with you naturally."
+  },
+  "fashionTips": [
+    { "title": "Embrace earth tones", "text": "Rust, olive, camel and chocolate are your power colors for everyday wear." },
+    { "title": "Reach for gold", "text": "Gold and warm metallic jewellery flatter your golden undertone far more than silver." },
+    { "title": "Play up your natural contrast", "text": "Your hair and skin differ strongly in depth, so high-contrast outfits — a deep shade against a crisp light one — echo your natural drama." },
+    { "title": "Build around Terracotta Glow and Camel", "text": "Your personalized palette leans into shades like Terracotta Glow and Camel — anchor an outfit with one and accent with the other." }
+  ],
   "seasonalPalette": [
     { "name": "Deep Teal", "hex": "#2A635F" },
     { "name": "Terracotta", "hex": "#D08465" },

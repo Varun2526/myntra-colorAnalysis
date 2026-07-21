@@ -36,12 +36,32 @@ class FacePosition(BaseModel):
     faceWidth: float
 
 
+class SeasonProfile(BaseModel):
+    title: str
+    tagline: str
+    description: str
+
+
+class UndertoneProfile(BaseModel):
+    title: str
+    descriptor: str
+    note: str
+
+
+class FashionTip(BaseModel):
+    title: str
+    text: str
+
+
 class AnalysisResponse(BaseModel):
     season: str
     undertone: str
     confidence: Confidence
     features: CapturedFeatures
     facePosition: FacePosition
+    seasonProfile: SeasonProfile
+    undertoneProfile: UndertoneProfile
+    fashionTips: list[FashionTip]
     seasonalPalette: list[PaletteColor]
     personalizedPalette: list[PaletteColor]
     outfitColors: list[PaletteColor]

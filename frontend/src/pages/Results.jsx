@@ -1,6 +1,5 @@
 import { Navigate, useNavigate } from 'react-router-dom'
 import useAnalysis from '../hooks/useAnalysis'
-import { SEASON_CONTENT } from '../data/seasonContent'
 import ProfileCard from '../components/results/ProfileCard'
 import AnalysisSummary from '../components/results/AnalysisSummary'
 import CapturedColors from '../components/results/CapturedColors'
@@ -16,6 +15,8 @@ function Results() {
 
   if (!image || !result) return <Navigate to="/" replace />
 
+  const seasonTitle = result.seasonProfile.title
+
   const handleAnalyzeAgain = () => {
     reset()
     navigate('/')
@@ -29,11 +30,8 @@ function Results() {
         </h1>
         <p className="mt-3 max-w-2xl text-base text-ink-light sm:text-lg">
           You're a{result.season === 'autumn' ? 'n' : ''}{' '}
-          <span className="font-bold text-primary">
-            {SEASON_CONTENT[result.season].title}
-          </span>{' '}
-          with a {result.undertone} undertone — here are the colors that make
-          you glow.
+          <span className="font-bold text-primary">{seasonTitle}</span> with a{' '}
+          {result.undertone} undertone — here are the colors that make you glow.
         </p>
       </header>
 
@@ -57,14 +55,14 @@ function Results() {
 
         <div className="min-w-0 space-y-12">
           <AnalysisSummary
-            season={result.season}
-            undertone={result.undertone}
+            seasonProfile={result.seasonProfile}
+            undertoneProfile={result.undertoneProfile}
             confidence={result.confidence}
           />
           <CapturedColors features={result.features} />
           <PaletteSection
             title="Recommended Seasonal Palette"
-            subtitle={`The classic ${SEASON_CONTENT[result.season].title} colors, curated by stylists`}
+            subtitle={`The classic ${seasonTitle} colors, curated by stylists`}
             colors={result.seasonalPalette}
           />
           <PaletteSection
@@ -72,10 +70,10 @@ function Results() {
             subtitle="Generated uniquely from your skin tone — tap any color to copy"
             colors={result.personalizedPalette}
           />
-          <FashionTips season={result.season} />
+          <FashionTips seasonTitle={seasonTitle} tips={result.fashionTips} />
           <OutfitColors colors={result.outfitColors} />
           <ExploreCTA
-            seasonTitle={SEASON_CONTENT[result.season].title}
+            seasonTitle={seasonTitle}
             onExplore={() => {
               // UI only — deep link into Myntra search lands later.
             }}

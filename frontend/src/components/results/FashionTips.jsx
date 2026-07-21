@@ -1,16 +1,13 @@
 import SectionHeading from './SectionHeading'
-import { SEASON_CONTENT } from '../../data/seasonContent'
 import { SparkleIcon } from '../icons'
 
-/** Season-specific styling recommendations. */
-function FashionTips({ season }) {
-  const { title, tips } = SEASON_CONTENT[season]
-
+/** Season-specific styling recommendations (supplied by the backend). */
+function FashionTips({ seasonTitle, tips }) {
   return (
     <section aria-label="Fashion tips" className="space-y-5">
       <SectionHeading
         title="Fashion Tips"
-        subtitle={`How to dress your ${title} palette`}
+        subtitle={`How to dress your ${seasonTitle} palette`}
       />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {tips.map((tip) => (
