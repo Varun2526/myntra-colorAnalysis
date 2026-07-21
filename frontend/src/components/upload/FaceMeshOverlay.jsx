@@ -10,13 +10,21 @@ const CONTOURS = [
   FaceLandmarker.FACE_LANDMARKS_LIPS,
 ]
 
+const IRISES = [
+  FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS,
+  FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS,
+]
+
 /**
  * Live MediaPipe face mesh drawn on a canvas that shares the video's exact
- * coordinate system: the canvas bitmap is sized to the SOURCE resolution
- * (video.videoWidth/videoHeight) and drawn with MediaPipe's DrawingUtils in
- * normalized coordinates. CSS then scales the canvas identically to the video,
- * so the mesh stays aligned at any display size / DPR. The wrapper mirrors
- * both video and canvas together, so landmarks mirror with the preview.
+ * coordinate system.
+ *
+ * The canvas bitmap is sized to the video's ON-SCREEN size × devicePixelRatio,
+ * so lines are crisp on HiDPI screens. Landmarks come back normalized (0–1),
+ * so DrawingUtils maps them to that bitmap and CSS displays the canvas over the
+ * exact same box as the video (they share the wrapper, so their rects coincide;
+ * the wrapper's mirror flips both together). Line widths are scaled by DPR so
+ * they render at a consistent visible thickness.
  *
  * Visualization only — landmarks are never sent anywhere; the backend runs its
  * own MediaPipe + ML pipeline at analysis time.
@@ -39,10 +47,16 @@ function FaceMeshOverlay({ videoRef, active }) {
       const video = videoRef.current
       if (!video || !video.videoWidth) return
 
-      // Requirement: canvas bitmap always matches the source frame size.
-      if (canvas.width !== video.videoWidth) canvas.width = video.videoWidth
-      if (canvas.height !== video.videoHeight) canvas.height = video.videoHeight
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      // Match the video's displayed box at device-pixel resolution for
+      // crisp lines. Canvas is CSS-scaled back down to the same box, so it
+      // overlays the video exactly regardless of DPR.
+      const dpr = window.devicePixelRatio || 1
+      const w = Math.round(video.clientWidth * dpr)
+      const h = Math.round(video.clientHeight * dpr)
+      if (!w || !h) return
+      if (canvas.width !== w) canvas.width = w
+      if (canvas.height !== h) canvas.height = h
+      ctx.clearRect(0, 0, w, h)
 
       const ts = performance.now()
       if (ts <= lastTs) return
@@ -53,18 +67,24 @@ function FaceMeshOverlay({ videoRef, active }) {
         utils.drawConnectors(
           landmarks,
           FaceLandmarker.FACE_LANDMARKS_TESSELATION,
-          { color: 'rgba(255,255,255,0.28)', lineWidth: 0.5 }
+          { color: 'rgba(120,230,255,0.4)', lineWidth: dpr }
         )
-        utils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_FACE_OVAL, {
-          color: '#ff3f6c',
-          lineWidth: 2,
-        })
         for (const conn of CONTOURS) {
           utils.drawConnectors(landmarks, conn, {
-            color: '#ff9f8f',
-            lineWidth: 1.5,
+            color: '#7fefff',
+            lineWidth: 2 * dpr,
           })
         }
+        for (const iris of IRISES) {
+          utils.drawConnectors(landmarks, iris, {
+            color: '#ffffff',
+            lineWidth: 2 * dpr,
+          })
+        }
+        utils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_FACE_OVAL, {
+          color: '#ff3f6c',
+          lineWidth: 3 * dpr,
+        })
       }
     }
 
