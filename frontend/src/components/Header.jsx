@@ -40,7 +40,7 @@ function NavLink({ label, active, highlight, badge }) {
       }`}
     >
       {badge && (
-        <span className="absolute -top-0 left-1/2 -translate-x-1/2 translate-y-2.5 text-[10px] font-extrabold uppercase text-primary">
+        <span className="absolute -right-1 top-3 translate-x-full text-[10px] font-extrabold uppercase leading-none text-primary">
           {badge}
         </span>
       )}
